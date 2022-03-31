@@ -5,6 +5,7 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true}));
 
 // Endpoints
 // http://localhost:5005 (BASE URL)
@@ -20,6 +21,13 @@ app.get("/api/songs/:id", (req,res) => {
     const id= req.params.id;
     const songs = repoContext.songs.findSongById(id);
     return res.send(songs);
+})
+
+//POST songs
+app.post("/api/songs", (req,res) =>{
+    const newSong = req.body;
+    const addedSong = repoContext.songs.createSong(newSong);
+    return res.send(addedSong);
 })
 
 //Server Start
