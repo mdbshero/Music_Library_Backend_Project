@@ -31,6 +31,14 @@ app.post("/api/songs", [songValidate], (req, res) => {
   return res.send(addedSong);
 });
 
+//PUT an existing song
+app.put("/api/songs/:id", (req, res) => {
+    const id = req.params.id;
+    const songPropertiesToModify = req.body;
+    const songToUpdate = repoContext.songs.updateSong(id, songPropertiesToModify);
+    return res.send(songToUpdate);
+})
+
 //Server Start
 const PORT = process.env.PORT || 5005;
 
