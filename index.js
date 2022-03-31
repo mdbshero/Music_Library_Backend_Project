@@ -1,7 +1,7 @@
 // Imports
 const express = require("express");
 const repoContext = require("./repository/repository-wrapper");
-const songValidate = require('./middleware/song-validation')
+const songValidate = require('./middleware/song-validation');
 const app = express();
 
 // Middleware
@@ -33,10 +33,17 @@ app.post("/api/songs", [songValidate], (req, res) => {
 
 //PUT an existing song
 app.put("/api/songs/:id", (req, res) => {
-    const id = req.params.id;
+    const id = parseInt(req.params.id);
     const songPropertiesToModify = req.body;
     const songToUpdate = repoContext.songs.updateSong(id, songPropertiesToModify);
     return res.send(songToUpdate);
+})
+
+//DELETE a song
+app.delete("/api/songs/:id", (req,res) => {
+    const id = parseInt(req.params.id);
+    const deletedSong = repoContext.songs.deleteSong(id);
+    return res.send(deletedSong);
 })
 
 //Server Start
